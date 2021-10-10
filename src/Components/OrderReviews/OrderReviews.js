@@ -103,7 +103,7 @@ const OrderReviews = () => {
           <span>Total:</span>
           <span>$ {totalPrice + shippingPrice}</span>{" "}
         </div>
-        <Button style={{ marginTop: "50px", width: "380px" }} variant="primary">
+        <Button style={{ marginTop: "50px", width: "350px" }} variant="primary">
           Buy now
         </Button>
       </div>

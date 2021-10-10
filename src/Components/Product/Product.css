@@ -6,7 +6,8 @@
 .mainInput {
   margin-top: 15px;
   width: 550px !important;
-  padding-left: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .productMain {
   display: flex;
@@ -15,4 +16,10 @@
 }
 .notFound {
   color: red;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainInput {
+    width: 100% !important;
+  }
 }
