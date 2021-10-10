@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "./../../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
 
 const OrderReviews = () => {
   const [
@@ -87,19 +88,24 @@ const OrderReviews = () => {
         ))}
       </div>
       {/* end of product */}
-      <div style={{ marginTop: "90px" }}>
-        <span>Subtotal:</span>
-        <span>$ {totalPrice}</span>{" "}
-      </div>
-      <hr />
-      <div>
-        <span>Shipping:</span>
-        <span>$ {shippingPrice}.00</span>{" "}
-      </div>
-      <hr />
-      <div>
-        <span>Total:</span>
-        <span>$ {totalPrice + shippingPrice}</span>{" "}
+      <div style={{ marginLeft: "15px" }}>
+        <div style={{ marginTop: "90px" }}>
+          <span>Subtotal:</span>
+          <span>$ {totalPrice}</span>{" "}
+        </div>
+        <hr />
+        <div>
+          <span>Shipping:</span>
+          <span>$ {shippingPrice}.00</span>{" "}
+        </div>
+        <hr />
+        <div>
+          <span>Total:</span>
+          <span>$ {totalPrice + shippingPrice}</span>{" "}
+        </div>
+        <Button style={{ marginTop: "50px", width: "380px" }} variant="primary">
+          Buy now
+        </Button>
       </div>
     </div>
   );
