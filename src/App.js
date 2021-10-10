@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { createContext, useState } from "react";
+import "./App.css";
+import Home from "./Components/Home/Home";
+
+export const UserContext = createContext();
 
 function App() {
+  const [cartData, setCartData] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [orderData, setOrderData] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider
+      value={[
+        cartData,
+        setCartData,
+        cartTotal,
+        setCartTotal,
+        orderData,
+        setOrderData,
+      ]}
+    >
+      <Home />
+    </UserContext.Provider>
   );
 }
 
