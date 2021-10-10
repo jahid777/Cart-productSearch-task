@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import OrderReview from "../OrderReview/OrderReview";
 import { UserContext } from "./../../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const OrderReviews = () => {
   const [
@@ -12,12 +13,14 @@ const OrderReviews = () => {
     setOrderData,
   ] = useContext(UserContext);
   const [products, setProducts] = useState(cartData);
-  console.log(cartData, "there is");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [shippingPrice, setShippingPrice] = useState(50);
-  const [isCartEmpty, setIsCartEmpty] = useState(false);
+  const [shippingPrice, setShippingPrice] = useState(0);
   setCartTotal(totalPrice);
 
+  useEffect(() => {
+    setTotalPrice(0);
+    setShippingPrice(0);
+  }, [cartData]);
   useEffect(() => {
     sumOfPrice();
   }, [cartData]);
@@ -29,26 +32,12 @@ const OrderReviews = () => {
     if (!cartData.length) {
       setTotalPrice(0);
       setShippingPrice(0);
-      setIsCartEmpty(true);
     }
     cartData.map((product) => {
       total = product.price * product.quantity;
       subTotal = subTotal + total;
       setTotalPrice(subTotal);
     });
-  };
-
-  // Handle Cart Items quantity with plus minus icon
-  const handlePlusMinus = (id, quantity) => {
-    let newCart;
-    cartData.map((item) => {
-      if (id === item.id) {
-        newCart = { ...item, quantity: quantity };
-      }
-    });
-    let newData = cartData.filter((item) => item.id != id);
-    newData = [...newData, newCart];
-    setCartData(newData);
   };
 
   // Delete items from cart
@@ -59,55 +48,59 @@ const OrderReviews = () => {
   };
   return (
     <div>
-      {!isCartEmpty && (
-        <div className="md:w-4/5 mx-auto px-2 py-24">
-          <div className="md:grid md:grid-cols-5">
-            <div className="md:col-span-3">
-              {products.map((product) => (
-                <OrderReview
-                  key={product.id}
-                  product={product}
-                  handlePlusMinus={handlePlusMinus}
-                  deleteItem={deleteItem}
-                ></OrderReview>
-              ))}
+      {/* product */}
+      <div>
+        {cartData.map((data) => (
+          <div style={{ display: "flex", paddingTop: "35px" }}>
+            <div style={{ display: "flex" }}>
+              <img
+                style={{ height: "60px", width: "60px" }}
+                src={data.img}
+                alt=""
+              />
+              <span
+                style={{
+                  paddingLeft: "5px",
+                  paddingBottom: "10px",
+                  color: "red",
+                }}
+              >
+                {" "}
+                {data.quantity}
+              </span>
             </div>
 
-            <div>
-              <div>
-                <div>
-                  <span>Subtotal:</span>
-                  <span>$ {totalPrice}</span>{" "}
-                </div>
-                <hr />
-                <div>
-                  <span>Shipping:</span>
-                  <span>$ {shippingPrice}</span>{" "}
-                </div>
-                <hr />
-                <div>
-                  <span>Total:</span>
-                  <span>$ {totalPrice + shippingPrice}</span>{" "}
-                </div>
-              </div>
+            <p style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+              {data.name}
+            </p>
+            <p style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+              BDT{data.price}.00
+            </p>
 
-              <button>
-                <span>Checkout</span>
-              </button>
-            </div>
+            <span style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                onClick={() => deleteItem(data.id)}
+              />
+            </span>
           </div>
-        </div>
-      )}
-
-      {isCartEmpty && (
-        <div>
-          <div>
-            <div>
-              <h3>Your Cart is Empty!</h3>
-            </div>
-          </div>
-        </div>
-      )}
+        ))}
+      </div>
+      {/* end of product */}
+      <div style={{ marginTop: "90px" }}>
+        <span>Subtotal:</span>
+        <span>$ {totalPrice}</span>{" "}
+      </div>
+      <hr />
+      <div>
+        <span>Shipping:</span>
+        <span>$ {shippingPrice}.00</span>{" "}
+      </div>
+      <hr />
+      <div>
+        <span>Total:</span>
+        <span>$ {totalPrice + shippingPrice}</span>{" "}
+      </div>
     </div>
   );
 };
